@@ -10,10 +10,17 @@ Full Name:                     NetID:
 
 1. Known Issues
 ----------------
-[List any known issues or functions that aren't working currently in the
-attached code. If there are no known issues, state "None known." Be as
-specific as possible - you get half credit for any reasonably sized bug
-that is fully explained here.]
+The reconstructed CSV (sql/02_export_to_csv.sql output) is not byte-for-byte
+identical to the original file for blank numeric fields. The source file
+double-quotes every field, including blanks (e.g. ""), but Postgres's CSV
+COPY only treats an *unquoted* empty field as NULL by default -- a quoted ""
+is a literal empty string. We load blank numeric fields as SQL NULL (via
+FORCE_NULL on COPY, since those columns can't hold an empty string), and
+Postgres's COPY TO can never write a NULL back out as a quoted "" -- FORCE_QUOTE
+explicitly excludes NULL values -- so those fields come back out as unquoted
+empty fields instead. `diff` will report a difference on every row that has
+at least one blank numeric field; the underlying data is otherwise identical
+(verified programmatically, field-by-field, against the 500-row sample).
 
 
 2. Collaboration

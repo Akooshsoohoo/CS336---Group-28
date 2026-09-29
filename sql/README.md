@@ -28,6 +28,50 @@ used:
   assignment. On export it's written back out as blank so the reconstructed
   CSV matches the original.
 
+## Testing before the full load
+
+The real file is ~349,563 rows / 278 MB — too slow to use while you're still
+debugging the SQL. `data/sample_500.csv` is the same file's header plus its
+first 500 data rows, small enough to load in under a second. Use it to
+iterate on ilab (or on a local Postgres if you have one) before touching the
+full file:
+
+```bash
+cd data
+cp sample_500.csv ../sql/          # so it sits next to the scripts, \copy uses a relative path
+cd ../sql
+```
+
+Then, in `psql`:
+
+```sql
+\i 01_create_and_load.sql
+```
+
+But first, temporarily point the `\copy ... FROM` line in
+`01_create_and_load.sql` at `sample_500.csv` instead of the full filename (or
+just symlink/rename the sample to the real filename in a scratch directory —
+either way, don't edit and forget to switch it back before the real run).
+Sanity-check the load:
+
+```sql
+SELECT count(*) FROM Preliminary;                 -- expect 500
+SELECT * FROM Preliminary LIMIT 5;
+SELECT min(sequence_number), max(sequence_number) FROM Preliminary; -- expect 1, 500
+\d Preliminary                                     -- confirm column types match sql/01_create_and_load.sql
+```
+
+Then run `02_export_to_csv.sql` (also pointed at a scratch output filename)
+and diff the 500-row sample against it the same way you will for the full
+file. Once this round-trips cleanly, swap the filenames back to the real CSV
+and run the full load — that run only needs to happen once.
+
+If you don't have ilab access yet and want to test locally instead, install
+PostgreSQL (`postgresql.org/download/windows`, or Docker Desktop +
+`docker run -e POSTGRES_PASSWORD=test -p 5432:5432 postgres`) and point
+`psql` at that instance with the same sample file — the scripts don't use
+anything ilab-specific.
+
 ## Steps (run on ilab)
 
 ```bash
