@@ -4,9 +4,10 @@ CS336 - Project 1 - Group 28
 0. Team Members
 ----------------
 Full Name:                     NetID:
-[Team member 1 name]           [netid1]
-[Team member 2 name]           [netid2]
-
+Keerthan Vijayavel             kv329
+Udaya Chhetri                  ubc3
+Harmon Jenkins                 hjj26
+Akash Saha                     
 
 1. Known Issues
 ----------------
