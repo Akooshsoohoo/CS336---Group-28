@@ -114,7 +114,9 @@ Rules for dividing attributes into entities:
   does get quoted as "", so the output is now byte-for-byte identical.
 - The full file is ~278 MB, so we tested against a 500-row sample
   (data/sample_500.csv) first.
-- Time spent: roughly [TODO] hours total across the group.
+- Time spent: roughly 10-12 hours total across the group (about 2.5-3
+  hours each): ~4 hours on the ER diagram, ~5 hours writing and debugging
+  the SQL scripts, and ~2 hours on the ilab load, screenshots and README.
 
 
 5. Database Storage
