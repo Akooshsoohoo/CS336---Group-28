@@ -83,7 +83,7 @@ Rules for dividing attributes into entities:
   application has an applicant, and the co-applicant is optional.
 - Denial holds the three denial reasons. It is optional (0..1) per
   application because only denied applications have reasons.
-- Location (locationID, the one attribute we were allowed to add) holds the
+- Location (location_id, the one attribute we were allowed to add) holds the
   census-tract-level data: census_tract_number, population,
   minority_population, HUD median family income, tract-to-MSA income,
   housing unit counts. It references State, County and MSAMD, which hold
