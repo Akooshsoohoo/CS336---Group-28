@@ -3,43 +3,40 @@ CS336 - Project 1 - Group 28
 
 0. Team Members
 ----------------
-Full Name:                     NetID:
-Keerthan Vijayavel            kv329
-Udaya Chhetri                   ubc3
-Harmon Jenkins                 hjj26
-Akash Saha                      as3880
+Full Name                 NetID
+Keerthan Vijayavel        kv329
+Udaya Chhetri             ubc3
+Harmon Jenkins            hjj26
+Akash Saha                as3880
+
 
 1. Known Issues
 ----------------
-None. Both scripts were run on ilab (ilab1.cs.rutgers.edu, database as3880):
+None. Both scripts were run on ilab (ilab1.cs.rutgers.edu, database as3880).
 01_create_and_load.sql loads all 349,563 rows into Preliminary, with
-sequence_number filled 1..349,563 as the primary key.
+sequence_number numbered 1 to 349,563 as the primary key.
 02_export_to_csv.sql writes reconstructed.csv, and
-`diff hmda_2017_nj_all-records_labels.csv reconstructed.csv` reports no
-differences (both files are 278,834,016 bytes). See
-screenshots/25_rowcount_export_and_diff_identical.jpg.
+"diff hmda_2017_nj_all-records_labels.csv reconstructed.csv" prints nothing,
+so the files are identical (both are 278,834,016 bytes). The last page of
+the screenshots PDF shows this.
 
-Note: in Preliminary, blank numeric fields are stored as NULL and blank text
-fields are stored as the empty string '', because COPY reads every field in
-this file as quoted. So to find non-blank text values use  col <> ''  rather
-than  col IS NOT NULL.
+Note: blank numeric fields are stored as NULL, but blank text fields are
+stored as an empty string, since every field in the CSV is quoted.
 
 
 2. Collaboration
 ------------------
-All four team members collaborated on this project:
-- ER diagram: designed together in draw.io (er_diagram/Group28_ER_Diagram.drawio,
-  submitted as er_diagram/Group28_ER_Diagram.pdf),
-  following the crow's foot / Oracle notation from the lecture slides
-  ("Database Design and ER diagrams") and the draw.io ER guide linked in the
-  assignment (drawio-app.com/blog/entity-relationship-diagrams-with-draw-io/).
-- SQL load/export scripts: written and tested by the group, with help from
-  an AI tool (Claude / Claude Code) for debugging the COPY options and
-  writing the scripts' comments. AI use is permitted for this assignment.
-- References: PostgreSQL documentation (COPY / \copy, FORCE_NULL,
-  FORCE_QUOTE, GENERATED ... AS IDENTITY, numeric vs. float types), and the
-  CFPB's HMDA documentation PDFs (lar_record_codes.pdf and
-  lar_record_format.pdf) to understand what each column and code means.
+All four team members worked on the project together.
+- ER diagram: made in draw.io using the crow's foot / Oracle notation from
+  the lecture slides ("Database Design and ER diagrams") and the draw.io ER
+  guide linked in the assignment.
+- SQL scripts: written and tested by the group. We used Claude (an AI
+  tool) to help debug the COPY options and to help draft parts of this
+  README.
+- References: the PostgreSQL documentation (COPY and \copy, FORCE_NULL,
+  FORCE_QUOTE, identity columns, numeric types) and the CFPB's HMDA
+  documentation (lar_record_codes.pdf and lar_record_format.pdf) for what
+  each column and code means.
 
 
 3. Data Insights & Entity Design
@@ -112,8 +109,8 @@ Rules for dividing attributes into entities:
   NULL, even with FORCE_QUOTE), so diff flagged every row. We fixed this
   by exporting coalesce(col::text, '') for every column. An empty string
   does get quoted as "", so the output is now byte-for-byte identical.
-- The full file is ~278 MB, so we tested against a 500-row sample
-  (data/sample_500.csv) first.
+- The full file is about 278 MB, so we tested the scripts on a 500-row
+  sample first.
 - Time spent: roughly 10-12 hours total across the group (about 2.5-3
   hours each): ~4 hours on the ER diagram, ~5 hours writing and debugging
   the SQL scripts, and ~2 hours on the ilab load, screenshots and README.
