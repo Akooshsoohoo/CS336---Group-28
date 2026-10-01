@@ -101,10 +101,12 @@ Rules for dividing attributes into entities:
   IDENTITY so the number is assigned in file order during the COPY.
 - In the export query, our NULL alias named sequence_number hid the real
   column in ORDER BY, so we qualify it as p.sequence_number.
-- Choosing types: census_tract_number and rate_spread are zero-padded
-  ("0218.04", "01.90"), so they stay text to keep the leading zeros.
-  minority_population and tract_to_msamd_income use numeric (not float) so
-  no precision is lost.
+- Choosing types: census_tract_number is an identifier padded to a fixed
+  width ("0218.04"), so it stays text to keep the leading zero.
+  rate_spread is numeric, but it is written in the file as "01.90", so the
+  export formats it with to_char(rate_spread, 'FM00.00') to put the
+  leading zero back. minority_population and tract_to_msamd_income use
+  numeric (not float) so no precision is lost.
 - Our first export wrote blank fields unquoted (Postgres never quotes a
   NULL, even with FORCE_QUOTE), so diff flagged every row. We fixed this
   by exporting coalesce(col::text, '') for every column. An empty string

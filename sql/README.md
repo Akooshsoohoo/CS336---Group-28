@@ -14,12 +14,11 @@ used:
 - **`integer`** — genuine numeric codes/counts (loan_type, action_taken,
   applicant_race_1, population, sequence_number, etc.)
 - **`text`** — free-text labels (every `*_name` column), IDs (`respondent_id`),
-  and the two fixed-width formatted fields **`census_tract_number`**
-  (`"0218.04"`) and **`rate_spread`** (`"01.90"`). These are kept as text
-  instead of `numeric` specifically because they're zero-padded to a fixed
-  width — casting to `numeric` would silently drop the leading zero and break
-  the round-trip diff.
-- **`numeric`** — `minority_population` and `tract_to_msamd_income`. Postgres's
+  and **`census_tract_number`** (`"0218.04"`), an identifier zero-padded to a
+  fixed width; casting it to `numeric` would drop the leading zero.
+- **`numeric`** — `rate_spread`, `minority_population` and `tract_to_msamd_income`.
+  The export writes `rate_spread` with `to_char(rate_spread, 'FM00.00')` so
+  `1.90` goes back out as `01.90`. Postgres's
   `numeric` type stores decimal digits exactly as parsed (unlike `float`), so
   these survive the round trip even though some values carry 15+ decimal
   digits.
