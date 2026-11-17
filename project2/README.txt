@@ -89,8 +89,11 @@ composite key (state_code, county_code) is a foreign key from location.
 - all_null_columns is CROSS JOINed in the export, so it must always hold
   exactly one row. It has a constant primary key id (CHECK id = 1) so a
   second row is rejected, and a trigger blocks DELETE and TRUNCATE.
-- Time spent: about 4.5 hours (Akash) on the SQL scripts, testing on ilab,
-  the videos and this README.
+- Time spent: roughly 16 hours total across the group (about 4 hours each):
+  ~4 hours finding the functional dependencies and checking them with a
+  normalization tool, ~4 hours on the ER diagram, ~5 hours writing and
+  debugging the SQL scripts, and ~3 hours on the ilab testing, videos,
+  screenshot and README.
 
 
 5. Database Storage
