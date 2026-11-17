@@ -20,7 +20,7 @@ None known. All scripts were run on ilab (ilab1.cs.rutgers.edu, database as3880)
   (it never touches Preliminary). "cmp hmda_2017_nj_all-records_labels.csv
   reconstructed2.csv" prints nothing, so the files are identical (278,834,016
   bytes). The screenshot of reconstructed2.csv in a spreadsheet is included.
-- 05_bad_inserts.sql tries 6 bad changes and the database rejects all 6.
+- 05_bad_inserts.sql tries 8 bad changes and the database rejects all 8.
 - Blank numeric fields are NULL. Blank text fields are NULL in the new tables
   (they were '' in Preliminary) and the export writes them back as "".
 
